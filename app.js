@@ -1,29 +1,48 @@
-const container = document.querySelector('.container');
+const gridContainer = document.querySelector('.grid-container');
+const changeSize = document.getElementById('change-size');
 
-const makeGrid = (gridSize) => {
-    // First for loop creates the rows by creating a new element, and appending that element to the container
-    for (let i = 0; i < gridSize; i++) {
-        let rows = document.createElement('div');
-        container.appendChild(rows).className = 'rows';
+const makeGrid = (col, rows) => {
+    for (let i = 0; i < (col * rows); i++) {
+        const grid = document.createElement('div');
+        grid.style.border = '1px solid black';
 
-        /* Second for loop, is nested, so for each row, 16 cells will be created (makeGrid(16)). In css we used "display: inline-block", so the cells 
-        are generated beside the row */
-        for (let k = 0; k < gridSize; k++) {
-            let cell = document.createElement('div');
-            rows.appendChild(cell).className = 'cells';
-        }
+        // Creates the columns using repeat property to create x amount of columns (same as rows)
+        gridContainer.style.gridTemplateColumns = `repeat(${col}, 1fr)`;
+        // Creates the rows using repeat property creating x amount of rows (same as columns)
+        gridContainer.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+        // Adds the grid to the container as a child
+        gridContainer.appendChild(grid).classList.add('cells');
     }
 };
 
 const changeColour = () => {
+    // Gets the HTML collection of elements with the class 'cells'
     let cells = document.getElementsByClassName('cells');
 
+    // Iterates through the HTML collection, with each individual element being assigned to cell, and then running the addEventListener to execute the code inside
     for (const cell of cells) {
         cell.addEventListener("mouseover", () => {
-            cell.classList.add("changeColour");
+            // Adds class 'change-colour' when hoevered over
+            cell.classList.add('change-colour');
         })
     }
 };
 
-makeGrid(20);
-changeColour();
+// Selecting all elements with a class of 'cells' and removing them from 'gridContainer'
+const reset = () => {
+    const cells = gridContainer.querySelectorAll('.cells');
+    cells.forEach(cell => cell.remove());
+};
+
+changeSize.addEventListener('click', () => {
+    reset();
+    let input = prompt("Enter a value: ");
+//     console.log(typeof input)
+     makeGrid(input, input);
+     changeColour();
+ });
+
+ makeGrid(16, 16);
+ changeColour();
+
+
