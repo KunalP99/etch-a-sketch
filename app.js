@@ -1,19 +1,13 @@
 const container = document.querySelector('.container');
 
 const makeGrid = (gridSize) => {
-    // Create a for loop for the creation of the rows
-    //      - Create row element, and append this element to the container 
-    // Create a for loop for the creation of columns inside the rows columns
-    //      - Create column element, and append this element to the rows 
-
-    // First for loops creates the rows by created a new element, and appending that element to the container
+    // First for loop creates the rows by creating a new element, and appending that element to the container
     for (let i = 0; i < gridSize; i++) {
         let rows = document.createElement('div');
         container.appendChild(rows).className = 'rows';
-        console.log(i);
 
-        /* Second for loop, is nested, so for each row, 16 cells will be created. In css we used "display: inline-block", so the cells are generated beside
-        the row */
+        /* Second for loop, is nested, so for each row, 16 cells will be created (makeGrid(16)). In css we used "display: inline-block", so the cells 
+        are generated beside the row */
         for (let k = 0; k < gridSize; k++) {
             let cell = document.createElement('div');
             rows.appendChild(cell).className = 'cells';
@@ -21,4 +15,15 @@ const makeGrid = (gridSize) => {
     }
 };
 
-makeGrid(16);
+const changeColour = () => {
+    let cells = document.getElementsByClassName('cells');
+
+    for (const cell of cells) {
+        cell.addEventListener("mouseover", () => {
+            cell.classList.add("changeColour");
+        })
+    }
+};
+
+makeGrid(20);
+changeColour();
