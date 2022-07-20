@@ -22,10 +22,16 @@ const changeColour = () => {
     // Iterates through the HTML collection, with each individual element being assigned to cell, and then running the addEventListener to execute the code inside
     for (const cell of cells) {
         cell.addEventListener("mouseover", () => {
-            // Adds class 'change-colour' when hoevered over
+            // Adds class 'change-colour' when hovered over
             cell.classList.add('change-colour');
         })
     }
+};
+
+
+const rbgColour = () => {
+    const randomColour = Math.floor(Math.random()*16777215).toString(16);
+    let cells = document.getElementsByClassName('cells');
 };
 
 // Selecting all elements with a class of 'cells' and removing them from 'gridContainer'
@@ -34,15 +40,19 @@ const reset = () => {
     cells.forEach(cell => cell.remove());
 };
 
+// When user clicks button, the grid is reset, and the user is prompted to enter a value which becomes the new grid size
 changeSize.addEventListener('click', () => {
     reset();
-    let input = prompt("Enter a value: ");
-//     console.log(typeof input)
+    let input = prompt("Enter a value (1 - 64):");
+    if (input > 64 || input < 1) {
+        input = prompt("Please enter a value between 1 - 64:")
+    }
      makeGrid(input, input);
      changeColour();
  });
 
  makeGrid(16, 16);
  changeColour();
+ rbgColour();
 
 
